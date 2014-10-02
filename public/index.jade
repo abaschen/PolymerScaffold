@@ -1,0 +1,31 @@
+extends layout
+block content
+    //
+        core-drawer-panel#drawerPanel
+            core-header-panel(drawer)
+                core-toolbar#navheader
+                    span Menu
+                core-menu
+                    core-item(label="One")
+                    core-item(label="Two")
+            core-header-panel(main)
+                core-toolbar#mainheader
+                    paper-icon-button#navicon(icon="menu")
+                    span(flex) Title
+                    span Accueil
+                    paper-icon-button#searchbutton(icon="search")
+                .content
+                    p Sample content.
+                    shop-list
+    core-scaffold
+        core-header-panel(navigation flex mode="seamed")
+            core-toolbar#navheader
+                span Menu
+            core-menu(theme="core-light-theme")
+                core-item#home(label="Home")
+                core-item#shoppingList(label="Store")
+        .title(tool) Title
+        .content
+            shop-list
+            template(if="{{menu === 'home'}}")
+                p 2nd content

@@ -1,0 +1,17 @@
+include config
+doctype html
+html(lang='fr')
+    head
+        block meta
+            meta(name='X-UA-Compatible', content='IE=edge,chrome=1')
+            meta(name='description', content='')
+            meta(name='keywords', content='')
+            meta(name='viewport', content='width=device-width, initial-scale=1')
+            meta(name='Cache-Control', content='no-store, no-cache')
+            meta(name='Pragma', content='no-cache')
+        title= siteName
+        include scripts
+        include styles
+    body(fullbleed,unresolved,vertical, layout)
+        block content
+

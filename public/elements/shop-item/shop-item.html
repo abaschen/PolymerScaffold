@@ -1,0 +1,200 @@
+<!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../components/polymer/polymer.html">
+<link rel="import" href="../../components/core-icon-button/core-icon-button.html">
+<link rel="import" href="../../components/paper-shadow/paper-shadow.html">
+<link rel="import" href="../../components/paper-button/paper-button.html">
+<link rel="import" href="../../components/core-pages/core-pages.html">
+<link rel="import" href="../../elements/star-rating/star-rating.html">
+
+<!--
+Element providing solution to no problem in particular.
+
+##### Example
+
+    <seed-element></seed-element>
+
+@element seed-element
+@blurb Element providing solution to no problem in particular.
+@status alpha
+@homepage http://polymerlabs.github.io/seed-element
+-->
+<polymer-element name="shop-item" attributes="item favorite">
+
+    <template>
+
+        <style>
+
+            :host {
+                display: block;
+                padding: 20px;
+                position: relative;
+                background-color: #fff;
+                font-size: 1.2rem;
+                font-weight: 300;
+                width: 400px;
+            }
+
+            core-icon-button {
+                position: absolute;
+                top: 3px;
+                right: 3px;
+                color: #636363;
+            }
+
+            #description {
+                height: 200px;
+                margin-bottom: 0.83em;
+            }
+
+            core-pages {
+                height: 200px;
+                border: none;
+                margin-left: 2em;
+                -webkit-user-select: none;
+                border-radius: 5px;
+            }
+
+            core-pages > img {
+                width: auto;
+                height: auto;
+                max-height: 100%;
+                max-width: 100%;
+                margin: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: inherit;
+            }
+
+            paper-button{
+                min-width: 130px
+            }
+
+            :host([favorite]) core-icon-button {
+                color: #da4336
+            }
+
+            core-pages.fancy > img {
+                opacity: 0;
+                transform: translate(-100px, 0) scale(0.9);
+                transition: all 1s cubic-bezier(.03,.56,.7,.98);
+            }
+
+            core-pages.fancy .core-selected + img {
+                transform: translate(100px, 0) scale(1);
+            }
+
+            core-pages.fancy .core-selected {
+                opacity: 1;
+                transform: translate(0, 0);
+            }
+
+            core-pages.fancy img.begin {
+                transform: translate(100px, 0) scale(0.9);
+            }
+        </style>
+
+        <paper-shadow z="1"></paper-shadow>
+
+        <h2>{{ item.name }}</h2>
+
+        <div id="description" class="container" layout horizontal>
+            <core-pages id="images" class="fancy" notap selected="0" flex on-click="{{imageClicked}}}">
+                <template repeat="{{ src in item.img }}">
+                    <img src="{{ src }}"/>
+                </template>
+            </core-pages>
+            <h6 flex>{{item.desc}}</h6>
+        </div>
+        <div class="text" layout horizontal>
+            <star-rating max="5" value="{{item.note}}"></star-rating>
+
+            <div flex>&nbsp;</div>
+            <paper-button label="{{ item.price }} €" raisedButton icon="add-shopping-cart"></paper-button>
+        </div>
+
+        <core-icon-button id="favicon" icon="favorite" on-tap="{{ favoriteTaped }}" iconsize="24"></core-icon-button>
+
+
+    </template>
+
+    <script>
+
+        Polymer({
+            publish: {
+                /**
+                 * The `name` attribute sets an object name
+                 *
+                 * @attribute author
+                 * @type string
+                 * @default 'Dimitri Glazkov'
+                 */
+                name: 'sample object',
+                favorite: {value: false, reflect: true}
+            },
+
+            /**
+             * `fancy` is a property that does something fancy.
+             *
+             * @property fancy
+             * @type bool
+             * @default false
+             */
+            fancy: false,
+            imageClicked: function (event) {
+                var images = this.$.images;
+                images.selected = (images.selected + 1) % (images.children.length-1);
+
+                images.async(function() {
+                    if (images.selectedIndex == 0) {
+                        images.selectedItem.classList.remove('begin');
+                    } else if (images.selectedIndex == images.items.length - 1) {
+                        images.items[0].classList.add('begin');
+                    }
+                });
+
+
+            },
+            /**
+             * The `sayHello` method will return a greeting.
+             *
+             * @method sayHello
+             * @param {String} greeting Pass in a specific greeting.
+             * @return {String} Returns a string greeting.
+             */
+            sayHello: function (greeting) {
+                var response = greeting || 'Hello World!';
+                return 'seed-element says, ' + response;
+            },
+
+
+            /**
+             * The `favorite-tap` event is fired whenever we
+             * call fireLasers.
+             *
+             * @event favorite-tap
+             */
+
+            /**
+             * Toggle the favorite state.
+             *
+             * @method favoriteTaped
+             */
+            favoriteTaped: function () {
+                this.favorite = !this.favorite;
+                this.fire('favorite-tap');
+            }
+
+        });
+
+    </script>
+
+</polymer-element>

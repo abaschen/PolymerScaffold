@@ -1,0 +1,27 @@
+body {
+  font-family: sans-serif;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+core-header-panel {
+  background: white; }
+
+core-toolbar {
+  background-color: #03A9F4; }
+
+#navheader {
+  background-color: #56BA89; }
+
+.content {
+  padding: 20px; }
+
+/* drawer is always visible on a wide screen
+ * so menu button isn't required */
+core-drawer-panel:not([narrow]) #navicon {
+  display: none; }
+
+/*# sourceMappingURL=style.css.map */

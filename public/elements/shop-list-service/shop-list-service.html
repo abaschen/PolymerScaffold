@@ -1,0 +1,72 @@
+<!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../components/polymer/polymer.html">
+<link rel="import" href="../../components/core-ajax/core-ajax.html">
+
+<!--
+Element providing solution to no problem in particular.
+
+##### Example
+
+    <shop-list-service></shop-list-service>
+
+@element shop-list-service
+@blurb Element providing solution to no problem in particular.
+@status alpha
+-->
+<polymer-element name="shop-list-service" attributes="items">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+        </style>
+        <core-ajax id="ajax"
+                   auto
+                   url="/items"
+                   on-core-response="{{itemsLoaded}}"
+                   handleAs="json">
+        </core-ajax>
+    </template>
+    <script>
+
+        Polymer({
+            created: function () {
+                this.items = [];
+            },
+
+            itemsLoaded: function () {
+                // Make a copy of the loaded data
+                this.items = this.$.ajax.response.slice(0);
+            },
+
+            ready: function () {
+                // Ready is a lifecycle callback.
+                // You can do setup work in here.
+                // More info: http://www.polymer-project.org/docs/polymer/polymer.html#lifecyclemethods
+            },
+
+            /**
+             * The `setFavorite` method will set an item favorite state.
+             *
+             * @method setFavorite
+             * @param {String} uid UID of the item
+             * @param {boolean} isFavorite UID of the item
+
+             */
+            setFavorite: function (uid, isFavorite) {
+                console.log('Favorite changed: ' + uid + ", now: " + isFavorite);
+            }
+
+        });
+
+    </script>
+
+</polymer-element>
